@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from translate import Translator
 from flask_cors import CORS
 import logging
@@ -79,12 +79,6 @@ def translate_endpoint():
     except Exception as e:
         app.logger.error(f"Translation failed: {str(e)}")
         return make_response(500, f"Translation failed: {str(e)}", None)
-
-# New route to serve form
-@app.route('/')
-def home():
-    # Serve form.html from the static directory
-    return send_from_directory('static', 'form.html')
 
 # Vercel requires an app instance for serverless functions
 application = app
