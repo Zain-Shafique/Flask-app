@@ -4,8 +4,9 @@ from flask_cors import CORS
 import logging
 import os
 
+# Create Flask app instance
 app = Flask(__name__)
-CORS(app)  # Add this line to enable CORS
+CORS(app)  # Enable CORS for all routes
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -78,12 +79,13 @@ def translate_endpoint():
     except Exception as e:
         app.logger.error(f"Translation failed: {str(e)}")
         return make_response(500, f"Translation failed: {str(e)}", None)
-    
+
 # New route to serve form
 @app.route('/')
 def home():
+    # Serve form.html from the static directory
     return send_from_directory('static', 'form.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# Vercel requires an app instance for serverless functions
+application = app
 
